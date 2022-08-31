@@ -11,7 +11,6 @@ import yaml
 from json2html import *
 
 class Prospector2HTML:
-
     PRH_CONFIG_FILE = '.prospector-html.yaml'
     PRH_DEF_OUTPUT_FILE = 'prospector-html-report'
 
@@ -29,7 +28,11 @@ class Prospector2HTML:
             return True
         return not any((re.search(rre, x['message']) is not None) for rre in self.prh_config['filter']['message_re'])
 
-
+    def get_css(self, x):
+        if not self.prh_config or not self.prh_config['html'] or not self.prh_config['html']['css']:
+            return '';
+        return '''<link rel="stylesheet" href="''' + self.prh_config['html']['css']) + '''">'''    
+    
     def filter_message(self, x):
         return self.filter_message_by_match(x) and self.filter_message_by_re(x)
 
@@ -210,7 +213,7 @@ class Prospector2HTML:
             report_string = '''
             <html>
                 <head>
-                    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+                    ''' + self.get_css() + '''
                     <style>body{ margin:0 100; background:whitesmoke; }</style>
                 </head>
 <!-- 
