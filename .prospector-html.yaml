@@ -1,3 +1,5 @@
+html:
+  css: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'
 filter:
   message:
       # Filter by exact match
